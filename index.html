@@ -16,19 +16,12 @@
             background-repeat: no-repeat;
         }
 
-        .page {
-            display: none; /* 默认隐藏页面 */
-            min-height: 100vh;
-        }
-
-        .page.active {
-            display: block; /* 仅显示当前页面 */
-        }
-
+        /* Header部分的背景和页面内容的背景保持一致 */
         header {
-            background-color: rgba(0, 0, 0, 0.5); /* 半透明背景 */
             padding: 20px;
+            background: inherit; /* 继承body的背景设置 */
             box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.3); /* 调整后的轻阴影 */
+            z-index: 1; /* 保证它在页面其他内容上方 */
         }
 
         header h1 {
@@ -40,6 +33,18 @@
             display: inline-block;
             box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2); /* 更轻的阴影效果 */
             background-color: rgba(0, 0, 0, 0.2); /* 半透明背景 */
+        }
+
+        .page {
+            display: none; /* 默认隐藏页面 */
+            min-height: 100vh;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .page.active {
+            display: block; /* 仅显示当前页面 */
         }
 
         main {
@@ -78,7 +83,8 @@
         }
     </style>
 </head>
-<body id="body-background">
+<body style="background-image: url('rrl5xj(3).png');">
+
     <header>
         <h1>我的网站索引</h1>
     </header>
@@ -94,7 +100,7 @@
     </div>
 
     <!-- Page 2 -->
-    <div class="page" id="page-2">
+    <div class="page" id="page-2" style="background-image: url('background2.jpg');">
         <main>
             <h2>第二页内容</h2>
             <ul>
@@ -113,7 +119,6 @@
     <script>
         let currentPage = 1;
         const totalPages = 2; // 测试期间两页
-        const backgrounds = ['rrl5xj(3).png', 'background2.jpg']; // 添加背景图片数组
 
         function changePage(direction) {
             document.getElementById(`page-${currentPage}`).classList.remove('active');
@@ -122,16 +127,10 @@
             if (currentPage < 1) currentPage = totalPages;
             document.getElementById(`page-${currentPage}`).classList.add('active');
             document.getElementById('page-indicator').textContent = `${currentPage} / ${totalPages}`;
-            updateBackground();
-        }
 
-        function updateBackground() {
-            // 更新 body 背景图，覆盖整个页面
-            document.getElementById('body-background').style.backgroundImage = `url(${backgrounds[currentPage - 1]})`;
+            // 切换body的背景图片
+            document.body.style.backgroundImage = `url('background${currentPage}.jpg')`;
         }
-
-        // 初始化页面背景
-        updateBackground();
     </script>
 </body>
 </html>
