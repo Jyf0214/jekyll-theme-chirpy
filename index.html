@@ -64,13 +64,15 @@
             left: 0;
             width: 100%;
             height: 5px;
-            background-color: rgba(0, 0, 0, 0.2);
+            background-color: transparent; /* 透明背景 */
+            box-shadow: 0 0 5px 2px rgba(0, 0, 255, 0.5); /* 蓝色阴影 */
         }
 
         .progress-bar {
             width: 0;
             height: 100%;
-            background-color: #4caf50;
+            background-color: #00bfff; /* 明亮的蓝色 */
+            box-shadow: 0 0 15px 2px rgba(0, 191, 255, 0.75); /* 荧光效果 */
             transition: width 0.5s ease-in-out;
         }
 
