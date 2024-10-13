@@ -1,4 +1,147 @@
----
-layout: home
-# Index page
----
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的网站索引</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url('background.jpg'); /* 主背景图片 */
+            background-size: cover;
+            background-position: center;
+            color: #fff;
+            text-align: center;
+        }
+        header {
+            background-color: rgba(0, 0, 0, 0.7); /* 半透明背景 */
+            padding: 20px;
+            background-image: url('header-bg.jpg'); /* 标题背景图片 */
+            background-size: cover;
+            background-position: center;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 3em;
+            padding: 20px 40px;
+            border: 2px solid #fff; /* 边框颜色 */
+            border-radius: 15px; /* 圆角 */
+            display: inline-block;
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.5); /* 阴影效果 */
+            background-color: rgba(0, 0, 0, 0.3); /* 半透明背景 */
+        }
+        main {
+            padding: 50px;
+        }
+        .website-list {
+            list-style: none;
+            padding: 0;
+        }
+        .website-list li {
+            margin: 20px 0;
+            font-size: 1.5em;
+            padding: 20px;
+            background-size: cover;
+            background-position: center;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.4);
+        }
+        .website-list li:nth-child(1) {
+            background-image: url('site1-bg.jpg'); /* 网站1背景图片 */
+        }
+        .website-list li:nth-child(2) {
+            background-image: url('site2-bg.jpg'); /* 网站2背景图片 */
+        }
+        .website-list li:nth-child(3) {
+            background-image: url('site3-bg.jpg'); /* 网站3背景图片 */
+        }
+        .website-list a {
+            text-decoration: none;
+            color: #fff;
+            border-bottom: 2px solid transparent;
+            transition: border-color 0.3s;
+        }
+        .website-list a:hover {
+            border-color: #00aced;
+        }
+        footer {
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.7);
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+        /* 图片点击效果相关样式 */
+        .image-container {
+            position: relative;
+            width: 300px;
+            display: inline-block;
+            margin: 20px;
+            cursor: pointer;
+        }
+
+        .image-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            opacity: 1;
+            transition: opacity 0.5s ease;
+        }
+
+        .image-container.clicked .overlay {
+            opacity: 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>我的网站索引</h1>
+    </header>
+
+    <main>
+        <ul class="website-list">
+            <li><a href="https://example1.com" target="_blank">网站1</a></li>
+            <li><a href="https://example2.com" target="_blank">网站2</a></li>
+            <li><a href="https://example3.com" target="_blank">网站3</a></li>
+        </ul>
+
+        <!-- 添加图片容器，点击后蒙版效果 -->
+        <div class="image-container" onclick="toggleOverlay(this)">
+            <img src="img1.jpg" alt="图片示例1">
+            <div class="overlay"></div>
+        </div>
+
+        <div class="image-container" onclick="toggleOverlay(this)">
+            <img src="img2.jpg" alt="图片示例2">
+            <div class="overlay"></div>
+        </div>
+
+        <div class="image-container" onclick="toggleOverlay(this)">
+            <img src="img3.jpg" alt="图片示例3">
+            <div class="overlay"></div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 我的个人主页</p>
+    </footer>
+
+    <script>
+        // JavaScript 用于控制蒙版的显示和隐藏
+        function toggleOverlay(container) {
+            container.classList.toggle('clicked');
+        }
+    </script>
+</body>
+</html>
