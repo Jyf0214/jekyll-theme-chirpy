@@ -42,24 +42,33 @@
             text-overflow: ellipsis; /* 溢出时显示省略号 */
         }
 
-        .pages {
-            display: flex;
-            transition: transform 0.5s ease-in-out; /* 滑动效果 */
-        }
-
+        /* 页面内容 */
         .page {
-            flex: 0 0 100%; /* 页面占满整个视口 */
+            display: none; /* 默认不显示 */
             min-height: 100vh;
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
             padding-top: 100px; /* 确保背景图片不会被标题遮挡 */
-            transition: background-image 0.5s ease-in-out;
         }
 
-        main {
-            padding: 30px;
-            z-index: 1; /* 保证 main 内容在背景图片之上 */
+        /* 当前页显示 */
+        .page.active {
+            display: block;
+        }
+
+        /* 进度条 */
+        .progress-bar-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background-color: rgba(0, 0, 0, 0.2);
+        }
+
+        .progress-bar {
+            width: 0;
+            height: 100%;
+            background-color: #4caf50;
+            transition: width 0.5s ease-in-out;
         }
 
         .pagination {
@@ -95,7 +104,12 @@
         }
     </style>
 </head>
-<body style="background-image: url('background1.jpg');">
+<body>
+
+    <!-- 进度条 -->
+    <div class="progress-bar-container">
+        <div class="progress-bar" id="progress-bar"></div>
+    </div>
 
     <!-- 标题悬浮在页面背景上 -->
     <header>
@@ -103,56 +117,87 @@
     </header>
 
     <!-- Pages (每个页面作为一个幻灯片) -->
-    <div class="pages" id="pages">
-        <!-- Page 1 -->
-        <div class="page" id="page-1" style="background-image: url('rrl5xj(3).png');">
-            <main>
-                <h2>第一页内容</h2>
-                <ul>
-                    <li><a href="https://example1.com" target="_blank">网站1</a></li>
-                </ul>
-            </main>
-        </div>
+    <div class="page" id="page-1" style="background-image: url('rrl5xj(3).png');">
+        <main>
+            <h2>第一页内容</h2>
+            <ul>
+                <li><a href="https://example1.com" target="_blank">网站1</a></li>
+            </ul>
+        </main>
+    </div>
 
-        <!-- Page 2 -->
-        <div class="page" id="page-2" style="background-image: url('background2.jpg');">
-            <main>
-                <h2>第二页内容</h2>
-                <ul>
-                    <li><a href="https://example2.com" target="_blank">网站2</a></li>
-                </ul>
-            </main>
-        </div>
+    <div class="page" id="page-2" style="background-image: url('background2.jpg');">
+        <main>
+            <h2>第二页内容</h2>
+            <ul>
+                <li><a href="https://example2.com" target="_blank">网站2</a></li>
+            </ul>
+        </main>
+    </div>
+
+    <div class="page" id="page-3" style="background-image: url('background3.jpg');">
+        <main>
+            <h2>第三页内容</h2>
+            <ul>
+                <li><a href="https://example3.com" target="_blank">网站3</a></li>
+            </ul>
+        </main>
     </div>
 
     <!-- Pagination -->
     <div class="pagination">
         <button id="prev" onclick="changePage(-1)">&#9664; 上一页</button>
-        <span class="page-indicator" id="page-indicator">1 / 2</span>
+        <span class="page-indicator" id="page-indicator">1 / 3</span>
         <button id="next" onclick="changePage(1)">下一页 &#9654;</button>
     </div>
 
     <script>
         let currentPage = 1;
-        const totalPages = 2; // 测试期间两页
-        const pages = document.getElementById('pages');
+        const totalPages = 3; // 动态更新总页数
+        const pages = document.querySelectorAll('.page');
+        const progressBar = document.getElementById('progress-bar');
+        const pageIndicator = document.getElementById('page-indicator');
 
+        // 显示当前页，更新进度条
+        function showPage(pageNumber) {
+            // 隐藏所有页面
+            pages.forEach(page => page.classList.remove('active'));
+            // 显示当前页面
+            document.getElementById(`page-${pageNumber}`).classList.add('active');
+            // 更新进度条
+            const progress = (pageNumber - 1) / (totalPages - 1) * 100;
+            progressBar.style.width = `${progress}%`;
+            // 更新分页显示
+            pageIndicator.textContent = `${pageNumber} / ${totalPages}`;
+        }
+
+        // 页数切换逻辑
         function changePage(direction) {
-            // 切换页面索引
             currentPage += direction;
             if (currentPage > totalPages) currentPage = 1;
             if (currentPage < 1) currentPage = totalPages;
 
-            // 移动到对应页面，利用 transform 实现滑动效果
-            const offset = (currentPage - 1) * -100; 
-            pages.style.transform = `translateX(${offset}%)`;
+            // 跳转到对应页
+            showPage(currentPage);
 
-            // 更新分页显示
-            document.getElementById('page-indicator').textContent = `${currentPage} / ${totalPages}`;
-
-            // 切换body的背景图片
-            document.body.style.backgroundImage = `url('background${currentPage}.jpg')`;
+            // 更新 URL
+            window.location.hash = `/page=${currentPage}`;
         }
+
+        // 处理页面加载时的 hash 参数
+        function loadPageFromHash() {
+            const hash = window.location.hash;
+            const match = hash.match(/\/page=(\d+)/);
+            if (match) {
+                currentPage = parseInt(match[1]);
+                if (currentPage < 1 || currentPage > totalPages) currentPage = 1;
+            }
+            showPage(currentPage);
+        }
+
+        // 页面初始化加载
+        loadPageFromHash();
     </script>
+
 </body>
 </html>
