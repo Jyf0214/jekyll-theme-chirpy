@@ -16,7 +16,7 @@
             background-repeat: no-repeat;
         }
 
-        /* 标题悬浮在背景上方 */
+        /* 标题悬浮在背景上方，增加最大宽度和避免过早换行 */
         header {
             padding: 20px;
             position: absolute;
@@ -24,6 +24,8 @@
             left: 50%;
             transform: translateX(-50%);
             z-index: 2;
+            width: 90%; /* 标题容器宽度适应 */
+            max-width: 800px; /* 最大宽度 */
         }
 
         header h1 {
@@ -35,6 +37,9 @@
             display: inline-block;
             background-color: rgba(0, 0, 0, 0.3); /* 透明背景 */
             box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.5); /* 阴影效果 */
+            white-space: nowrap; /* 防止换行 */
+            overflow: hidden;
+            text-overflow: ellipsis; /* 溢出时显示省略号 */
         }
 
         .page {
