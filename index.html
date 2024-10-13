@@ -9,20 +9,30 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-image: url('rrl5xj(3).png'); /* 主背景图片 */
-            background-size: cover;
-            background-position: center;
             color: #fff;
             text-align: center;
         }
+
+        .page {
+            display: none; /* 默认隐藏页面 */
+            min-height: 100vh;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .page.active {
+            display: block; /* 仅显示当前页面 */
+        }
+
         header {
             background-color: rgba(0, 0, 0, 0.5); /* 半透明背景 */
             padding: 20px;
-            background-image: url('header-bg.jpg'); /* 标题背景图片 */
             background-size: cover;
             background-position: center;
             box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.3); /* 调整后的轻阴影 */
         }
+
         header h1 {
             margin: 0;
             font-size: 2em;
@@ -33,78 +43,17 @@
             box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2); /* 更轻的阴影效果 */
             background-color: rgba(0, 0, 0, 0.2); /* 半透明背景 */
         }
+
         main {
             padding: 30px;
         }
-        .website-list {
-            list-style: none;
-            padding: 0;
-        }
-        .website-list li {
-            margin: 15px 0;
-            font-size: 1.2em;
-            padding: 15px;
-            background-size: contain; /* 使图片自适应大小 */
-            background-repeat: no-repeat;
-            background-position: center;
-            border-radius: 10px;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.4);
-            min-height: 200px; /* 设置最小高度，保证背景图片显示 */
-        }
-        .website-list li:nth-child(1) {
-            background-image: url('site1-bg.jpg');
-        }
-        .website-list li:nth-child(2) {
-            background-image: url('site2-bg.jpg');
-        }
-        .website-list li:nth-child(3) {
-            background-image: url('site3-bg.jpg');
-        }
-        .website-list a {
-            text-decoration: none;
-            color: #fff;
-            border-bottom: 2px solid transparent;
-            transition: border-color 0.3s;
-        }
-        .website-list a:hover {
-            border-color: #00aced;
-        }
+
         footer {
             padding: 10px;
             background-color: rgba(0, 0, 0, 0.5);
             position: fixed;
             bottom: 0;
             width: 100%;
-        }
-        /* 自适应图片大小 */
-        .image-container {
-            position: relative;
-            width: 100%;
-            max-width: 600px; /* 设置最大宽度 */
-            display: inline-block;
-            margin: 15px auto;
-            cursor: pointer;
-        }
-
-        .image-container img {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-
-        .overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            opacity: 1;
-            transition: opacity 0.5s ease;
-        }
-
-        .image-container.clicked .overlay {
-            opacity: 0;
         }
     </style>
 </head>
@@ -113,56 +62,40 @@
         <h1>我的网站索引</h1>
     </header>
 
-    <main>
-        <ul class="website-list">
-            <li><a href="https://example1.com" target="_blank">网站1</a></li>
-            <li><a href="https://example2.com" target="_blank">网站2</a></li>
-            <li><a href="https://example3.com" target="_blank">网站3</a></li>
-        </ul>
+    <!-- Page 1 -->
+    <div class="page active" id="page-1" style="background-image: url('rrl5xj(3).png');">
+        <main>
+            <h2>第一页内容</h2>
+            <ul>
+                <li><a href="https://example1.com" target="_blank">网站1</a></li>
+            </ul>
+        </main>
+    </div>
 
-        <!-- 添加图片容器，点击后蒙版效果 -->
-        <div class="image-container" onclick="toggleOverlay(this)">
-            <img src="img1.jpg" alt="图片示例1">
-            <div class="overlay"></div>
-        </div>
-
-        <div class="image-container" onclick="toggleOverlay(this)">
-            <img src="img2.jpg" alt="图片示例2">
-            <div class="overlay"></div>
-        </div>
-
-        <div class="image-container" onclick="toggleOverlay(this)">
-            <img src="img3.jpg" alt="图片示例3">
-            <div class="overlay"></div>
-        </div>
-    </main>
+    <!-- Page 2 -->
+    <div class="page" id="page-2" style="background-image: url('back.png');">
+        <main>
+            <h2>第二页内容</h2>
+            <ul>
+                <li><a href="https://example2.com" target="_blank">网站2</a></li>
+            </ul>
+        </main>
+    </div>
 
     <footer>
         <p>&copy; 2024 我的个人主页</p>
+        <button onclick="nextPage()">下一页</button>
     </footer>
 
     <script>
-        // JavaScript 用于控制蒙版的显示和隐藏
-        function toggleOverlay(container) {
-            container.classList.toggle('clicked');
-        }
+        let currentPage = 1;
+        const totalPages = 2; // 测试期间两页
 
-        // 背景图处理：如果背景图太小时切换下一张
-        const backgrounds = ['site1-bg.jpg', 'site2-bg.jpg', 'site3-bg.jpg'];
-        let currentBgIndex = 0;
-        document.body.style.backgroundImage = `url(${backgrounds[currentBgIndex]})`;
-
-        function checkBackgroundSize() {
-            const img = new Image();
-            img.src = backgrounds[currentBgIndex];
-            img.onload = function () {
-                if (img.width < 1920 || img.height < 1080) { // 判断图片是否太小
-                    currentBgIndex = (currentBgIndex + 1) % backgrounds.length;
-                    document.body.style.backgroundImage = `url(${backgrounds[currentBgIndex]})`;
-                }
-            };
+        function nextPage() {
+            document.getElementById(`page-${currentPage}`).classList.remove('active');
+            currentPage = (currentPage % totalPages) + 1;
+            document.getElementById(`page-${currentPage}`).classList.add('active');
         }
-        checkBackgroundSize();
     </script>
 </body>
 </html>
