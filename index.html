@@ -106,6 +106,44 @@
             color: #fff;
             margin: 0 15px;
         }
+
+        /* 链接框 (3:1 比例) */
+        .link-box {
+            width: 300px; /* 宽度 */
+            height: 100px; /* 高度 3:1 比例 */
+            margin: 20px auto;
+            position: relative;
+            border-radius: 10px;
+            overflow: hidden;
+            background-size: cover;
+            background-position: center;
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        /* 链接内容 */
+        .link-box a {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+            color: white;
+            text-decoration: none;
+            font-size: 20px;
+            background-color: rgba(0, 0, 0, 0.5); /* 背景色稍微加深 */
+            transition: background-color 0.3s ease;
+        }
+
+        /* 悬停时发光效果 */
+        .link-box:hover {
+            box-shadow: 0px 4px 15px rgba(0, 191, 255, 0.75); /* 蓝色荧光 */
+            transform: translateY(-5px); /* 微微上升 */
+        }
+
+        .link-box:hover a {
+            background-color: rgba(0, 0, 0, 0.7); /* 加深背景 */
+        }
     </style>
 </head>
 <body>
@@ -121,30 +159,39 @@
     </header>
 
     <!-- Pages (每个页面作为一个幻灯片) -->
-    <div class="page" id="page-1" style="background-image: url('rrl5xj(3).png');">
+    <div class="page" id="page-1" style="background-image: url('background1.jpg');">
         <main>
             <h2>第一页内容</h2>
-            <ul>
-                <li><a href="https://example1.com" target="_blank">网站1</a></li>
-            </ul>
+            <div class="link-box" style="background-image: url('site1-background.jpg');">
+                <a href="https://example1.com" target="_blank">网站1</a>
+            </div>
+            <div class="link-box" style="background-image: url('site2-background.jpg');">
+                <a href="https://example2.com" target="_blank">网站2</a>
+            </div>
         </main>
     </div>
 
     <div class="page" id="page-2" style="background-image: url('background2.jpg');">
         <main>
             <h2>第二页内容</h2>
-            <ul>
-                <li><a href="https://example2.com" target="_blank">网站2</a></li>
-            </ul>
+            <div class="link-box" style="background-image: url('site3-background.jpg');">
+                <a href="https://example3.com" target="_blank">网站3</a>
+            </div>
+            <div class="link-box" style="background-image: url('site4-background.jpg');">
+                <a href="https://example4.com" target="_blank">网站4</a>
+            </div>
         </main>
     </div>
 
     <div class="page" id="page-3" style="background-image: url('background3.jpg');">
         <main>
             <h2>第三页内容</h2>
-            <ul>
-                <li><a href="https://example3.com" target="_blank">网站3</a></li>
-            </ul>
+            <div class="link-box" style="background-image: url('site5-background.jpg');">
+                <a href="https://example5.com" target="_blank">网站5</a>
+            </div>
+            <div class="link-box" style="background-image: url('site6-background.jpg');">
+                <a href="https://example6.com" target="_blank">网站6</a>
+            </div>
         </main>
     </div>
 
@@ -169,39 +216,28 @@
             // 显示当前页面
             document.getElementById(`page-${pageNumber}`).classList.add('active');
             // 更新进度条
-            const progress = (pageNumber - 1) / (totalPages - 1) * 100;
+            const progress = (pageNumber / totalPages) * 100;
             progressBar.style.width = `${progress}%`;
-            // 更新分页显示
+
+            // 更新页码指示器
             pageIndicator.textContent = `${pageNumber} / ${totalPages}`;
         }
 
-        // 页数切换逻辑
+        // 更改页面函数
         function changePage(direction) {
             currentPage += direction;
-            if (currentPage > totalPages) currentPage = 1;
-            if (currentPage < 1) currentPage = totalPages;
-
-            // 跳转到对应页
-            showPage(currentPage);
-
-            // 更新 URL
-            window.location.hash = `/page=${currentPage}`;
-        }
-
-        // 处理页面加载时的 hash 参数
-        function loadPageFromHash() {
-            const hash = window.location.hash;
-            const match = hash.match(/\/page=(\d+)/);
-            if (match) {
-                currentPage = parseInt(match[1]);
-                if (currentPage < 1 || currentPage > totalPages) currentPage = 1;
+            if (currentPage < 1) {
+                currentPage = totalPages;
+            } else if (currentPage > totalPages) {
+                currentPage = 1;
             }
             showPage(currentPage);
+            // 更新 URL 参数
+            window.history.pushState({}, '', `?page=${currentPage}`);
         }
 
-        // 页面初始化加载
-        loadPageFromHash();
+        // 初始加载时显示第一页
+        showPage(currentPage);
     </script>
-
 </body>
 </html>
