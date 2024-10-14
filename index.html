@@ -204,6 +204,36 @@
         </main>
     </div>
 
+    <div class="page" id="page-4" style="background-image: url('background4.jpg');">
+        <main>
+            <h2>第三页内容</h2>
+            <div class="link-box" style="background-image: url('site10-background.jpg');">
+                <a href="https://example5.com" target="_blank">网站5</a>
+            </div>
+            <div class="link-box" style="background-image: url('site11-background.jpg');">
+                <a href="https://example6.com" target="_blank">网站6</a>
+            </div>
+            <div class="link-box" style="background-image: url('site12-background.png');">
+                <a href="https://example2.com" target="_blank">网站2</a>
+            </div>
+        </main>
+    </div>
+
+    <div class="page" id="page-5" style="background-image: url('background5.jpg');">
+        <main>
+            <h2>第三页内容</h2>
+            <div class="link-box" style="background-image: url('site13-background.jpg');">
+                <a href="https://example5.com" target="_blank">网站5</a>
+            </div>
+            <div class="link-box" style="background-image: url('site14-background.jpg');">
+                <a href="https://example6.com" target="_blank">网站6</a>
+            </div>
+            <div class="link-box" style="background-image: url('site15-background.png');">
+                <a href="https://example2.com" target="_blank">网站2</a>
+            </div>
+        </main>
+    </div>
+
     <!-- Pagination -->
     <div class="pagination">
         <button id="prev" onclick="changePage(-1)">&#9664; 上一页</button>
@@ -213,7 +243,7 @@
 
     <script>
         let currentPage = 1;
-        const totalPages = 3; // 动态更新总页数
+        const totalPages = 5; // 动态更新总页数
         const pages = document.querySelectorAll('.page');
         const progressBar = document.getElementById('progress-bar');
         const pageIndicator = document.getElementById('page-indicator');
