@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jyf0214 - neko优化版</title>
+    <title>Jyf0214 - 优化版</title>
     <style>
-        /* neko用CSS变量把颜色整理起来了喵，主人想换风格就改这里喵！ */
         :root {
             --primary-text-color: #fff;
             --progress-bar-color: #00bfff;
@@ -17,19 +16,17 @@
             --header-bg-color: rgba(0, 0, 0, 0.3);
             --shadow-color: rgba(0, 0, 0, 0.5);
         }
-
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Microsoft YaHei', Arial, sans-serif; /* 优化为微软雅黑，更适合中文 */
             margin: 0;
             padding: 0;
             color: var(--primary-text-color);
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-            overflow: hidden; /* 隐藏滚动条喵 */
+            overflow: hidden;
         }
 
-        /* 标题悬浮在背景上方喵 */
         header {
             padding: 20px;
             position: absolute;
@@ -37,32 +34,31 @@
             left: 50%;
             transform: translateX(-50%);
             z-index: 2;
-            width: 90%; 
+            width: 90%;
             max-width: 800px;
             text-align: center;
         }
 
         header h1 {
             margin: 0;
-            font-size: 2em;
+            font-size: 2.5em; /* 标题字体加大，更显眼 */
             padding: 10px 20px;
             border: 2px solid var(--primary-text-color);
             border-radius: 15px;
             display: inline-block;
-            background-color: var(--header-bg-color); 
+            background-color: var(--header-bg-color);
             box-shadow: 0px 2px 10px var(--shadow-color);
-            white-space: nowrap; 
+            white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
         }
 
-        /* 页面内容喵 */
         .page {
-            display: none; /* 默认不显示喵 */
+            display: none;
             min-height: 100vh;
             width: 100%;
-            padding-top: 100px; /* 确保内容不会被标题遮挡喵 */
-            box-sizing: border-box; /* 让padding不影响总高度喵 */
+            padding-top: 100px;
+            box-sizing: border-box;
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -72,21 +68,20 @@
             display: block;
         }
 
-        /* neko让内容居中，这样更好看喵！ */
         .page main {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 20px; /* 链接盒子之间的间距喵 */
+            gap: 20px;
             padding: 20px;
         }
 
         .page h2 {
             margin-bottom: 20px;
+            font-size: 1.8em; /* h2字体加大，层次更分明 */
         }
-        
-        /* 进度条喵 */
+
         .progress-bar-container {
             position: fixed;
             top: 0;
@@ -94,7 +89,7 @@
             width: 100%;
             height: 5px;
             background-color: transparent;
-            z-index: 3; /* 保证在最上面喵 */
+            z-index: 3;
         }
 
         .progress-bar {
@@ -112,7 +107,7 @@
             position: fixed;
             bottom: 20px;
             width: 100%;
-            z-index: 2; 
+            z-index: 2;
         }
 
         .pagination button {
@@ -138,11 +133,10 @@
             font-weight: bold;
         }
 
-        /* 链接框，neko让它更有弹性了喵 */
         .link-box {
             width: 90%;
-            max-width: 360px; /* 最大宽度喵 */
-            aspect-ratio: 3 / 1; /* 保持3:1的比例喵 */
+            max-width: 360px;
+            aspect-ratio: 3 / 1;
             margin: 0 auto;
             position: relative;
             border-radius: 10px;
@@ -161,25 +155,24 @@
             height: 100%;
             color: white;
             text-decoration: none;
-            font-size: 20px;
+            font-size: 22px; /* 链接文字加大，更醒目 */
             font-weight: bold;
             background-color: var(--link-box-bg-color);
             transition: background-color 0.3s ease;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.7); /* 给文字加点阴影更好看喵 */
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.7); /* 文字阴影增强可读性 */
         }
 
         .link-box:hover {
-            box-shadow: 0px 4px 20px var(--progress-bar-glow); /* 蓝色荧光喵 */
-            transform: translateY(-5px); 
+            box-shadow: 0px 4px 20px var(--progress-bar-glow);
+            transform: translateY(-5px);
         }
 
         .link-box:hover a {
-            background-color: var(--link-box-hover-bg-color); 
+            background-color: var(--link-box-hover-bg-color);
         }
     </style>
 </head>
 <body>
-
     <div class="progress-bar-container">
         <div class="progress-bar" id="progress-bar"></div>
     </div>
@@ -188,7 +181,6 @@
         <h1>Jyf0214网站索引</h1>
     </header>
 
-    <!-- Pages (每个页面作为一个幻灯片) -->
     <div class="page" id="page-1" style="background-image: url('rrl5xj(3).png');">
         <main>
             <h2>第一页内容</h2>
@@ -250,17 +242,15 @@
     </div>
 
     <script>
-        // neko把代码包起来了，这样就不会乱跑了喵
         document.addEventListener('DOMContentLoaded', () => {
             const pages = document.querySelectorAll('.page');
-            const totalPages = pages.length; // neko让它自己数有多少页，主人不用再操心了喵！
+            const totalPages = pages.length;
             const progressBar = document.getElementById('progress-bar');
             const pageIndicator = document.getElementById('page-indicator');
             const prevButton = document.getElementById('prev');
             const nextButton = document.getElementById('next');
             let currentPage = 1;
 
-            // 这个函数能从网址里找到页数，这样分享链接给别人也能直接跳到那一页喵！
             function getPageFromURL() {
                 const params = new URLSearchParams(window.location.search);
                 const page = parseInt(params.get('page'), 10);
@@ -275,18 +265,16 @@
                 pages.forEach((page, index) => {
                     if (index + 1 === currentPage) {
                         page.classList.add('active');
-                        // 更新背景，防止前一页的背景残留喵
                         document.body.style.backgroundImage = window.getComputedStyle(page).backgroundImage;
                     } else {
                         page.classList.remove('active');
                     }
                 });
-                
+
                 const progress = (currentPage / totalPages) * 100;
                 progressBar.style.width = `${progress}%`;
                 pageIndicator.textContent = `${currentPage} / ${totalPages}`;
-                
-                // 更新URL，但是不会刷新页面喵
+
                 const url = new URL(window.location);
                 url.searchParams.set('page', currentPage);
                 window.history.pushState({ path: url.href }, '', url.href);
@@ -301,11 +289,10 @@
                 }
                 showPage(nextPage);
             }
-            
+
             prevButton.addEventListener('click', () => changePage(-1));
             nextButton.addEventListener('click', () => changePage(1));
 
-            // 页面刚打开时，就去读网址，然后显示正确的页面喵
             currentPage = getPageFromURL();
             showPage(currentPage);
         });
